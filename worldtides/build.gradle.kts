@@ -29,7 +29,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 }
 
-group = "okruk.worldtides"
+group = "com.oleksandrkruk"
 version = "0.1.0"
 
 // This will set project and version in MANIFEST.MF
