@@ -1,4 +1,4 @@
-package okruk.worldtides
+package com.oleksandrkruk.worldtides
 
 import kotlin.test.Test
 import kotlin.test.assertTrue
