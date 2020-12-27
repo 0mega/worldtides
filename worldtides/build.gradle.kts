@@ -6,6 +6,9 @@ plugins {
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
 
+    // Publishing
+    `maven-publish`
+
     // Tests results logging
     id("com.adarshr.test-logger") version "2.1.1"
 }
@@ -30,14 +33,28 @@ dependencies {
 }
 
 group = "com.oleksandrkruk"
-version = "0.1.0"
+version = "0.1.0-SNAPSHOT"
 
-// This will set project and version in MANIFEST.MF
+// This will set project name and version in MANIFEST.MF
 tasks.jar {
     manifest {
         attributes(mapOf(
             "Implementation-Title" to project.name,
             "Implementation-Version" to project.version)
         )
+    }
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("worldtides") {
+            from(components["java"])
+            withoutBuildIdentifier()
+        }
     }
 }
