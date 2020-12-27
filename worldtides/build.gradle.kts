@@ -5,6 +5,9 @@ plugins {
 
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
+
+    // Tests results logging
+    id("com.adarshr.test-logger") version "2.1.1"
 }
 
 repositories {
