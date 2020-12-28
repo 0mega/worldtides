@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/com.oleksandrkruk/worldtides.svg)](https://jitpack.io/#com.oleksandrkruk/worldtides)
+
 # WorldTides Client
 Kotlin Client for [World Tides API](https://www.worldtides.info/apidocs)
 
