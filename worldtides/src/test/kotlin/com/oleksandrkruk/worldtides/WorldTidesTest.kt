@@ -1,10 +1,11 @@
 package com.oleksandrkruk.worldtides
 
-import kotlin.test.Test
+import org.junit.jupiter.api.Test
 import kotlin.test.assertTrue
 
 class WorldTidesTest {
-    @Test fun testMethod() {
+    @Test
+    fun testMethod() {
         val classUnderTest = WorldTides()
         assertTrue(classUnderTest.test(), "test method should return 'true'")
     }
