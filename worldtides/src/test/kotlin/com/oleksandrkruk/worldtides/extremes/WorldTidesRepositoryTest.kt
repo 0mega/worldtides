@@ -5,6 +5,8 @@ import com.oleksandrkruk.worldtides.extremes.data.ExtremeResponse
 import com.oleksandrkruk.worldtides.extremes.data.TideExtremesResponse
 import com.oleksandrkruk.worldtides.extremes.models.TideExtremes
 import com.oleksandrkruk.worldtides.extremes.models.TideType
+import okhttp3.MediaType
+import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -21,6 +23,7 @@ import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.test.assertTrue
+import kotlin.test.fail
 
 @Suppress("UNCHECKED_CAST")
 class WorldTidesRepositoryTest {
@@ -42,20 +45,13 @@ class WorldTidesRepositoryTest {
         MockitoAnnotations.initMocks(this)
 
         `when`(dateFormatterMock.parse(ArgumentMatchers.any())).thenReturn(today)
-        `when`(mockCall.enqueue(any())).thenAnswer { invocation ->
-            val callback: Callback<TideExtremesResponse> = invocation.arguments[0] as Callback<TideExtremesResponse>
-            val success = Response.success(200, tidesResponse)
-            callback.onResponse(mockCall, success)
-            null
-        }
-        `when`(gatewayMock.extremes(anyString(), anyInt(), anyString(), anyString(), anyString()))
-            .thenReturn(mockCall)
-
         tidesRepository = WorldTidesRepository(gatewayMock, dateFormatterMock)
     }
 
     @Test
     fun mapsCorrectlyFromDataToModel() {
+        withSuccessfulResponse()
+
         tidesResponse = TideExtremesResponse(200, null, listOf(buildExtremeData()))
 
         tidesRepository.extremes("" ,1, "", "", "", object : TidesCallback {
@@ -68,6 +64,28 @@ class WorldTidesRepositoryTest {
                     assertEquals(0.45f, tides.extremes.first().height)
                     assertEquals(TideType.High, tides.extremes.first().type)
                 }
+
+                result.onFailure {
+                    fail("should never invoke failure on successful response")
+                }
+            }
+        })
+    }
+
+    @Test
+    fun bubblesUpTheErrorOnFailure() {
+        withFailedResponse()
+        tidesRepository.extremes("" ,1, "", "", "", object : TidesCallback {
+
+            override fun result(result: Result<TideExtremes>) {
+                assertTrue(result.isFailure)
+                result.onSuccess { _ ->
+                    fail("should never invoke success on failed response")
+                }
+
+                result.onFailure {
+                    assertEquals(Error::class, it::class)
+                }
             }
         })
     }
@@ -79,5 +97,28 @@ class WorldTidesRepositoryTest {
         type: String = "High"
     ) : ExtremeResponse {
         return ExtremeResponse(dt, date, height, type)
+    }
+
+    private fun withSuccessfulResponse() {
+        `when`(mockCall.enqueue(any())).thenAnswer { invocation ->
+            val callback: Callback<TideExtremesResponse> = invocation.arguments[0] as Callback<TideExtremesResponse>
+            val success = Response.success(200, tidesResponse)
+            callback.onResponse(mockCall, success)
+            null
+        }
+        `when`(gatewayMock.extremes(anyString(), anyInt(), anyString(), anyString(), anyString()))
+            .thenReturn(mockCall)
+    }
+
+    private fun withFailedResponse() {
+        `when`(mockCall.enqueue(any())).thenAnswer { invocation ->
+            val callback: Callback<TideExtremesResponse> = invocation.arguments[0] as Callback<TideExtremesResponse>
+            val mockResponseBody = ResponseBody.create(MediaType.get("json/txt"), "")
+            val timeout = Response.error<TideExtremesResponse>(408, mockResponseBody)
+            callback.onResponse(mockCall, timeout)
+            null
+        }
+        `when`(gatewayMock.extremes(anyString(), anyInt(), anyString(), anyString(), anyString()))
+            .thenReturn(mockCall)
     }
 }
