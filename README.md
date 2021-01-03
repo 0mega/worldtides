@@ -20,6 +20,28 @@ Declare the dependency in the module `build.gradle`:
 
 ```
 dependencies {
-    implementation 'com.oleksandrkruk:worldtides:0.1.0-SNAPSHOT'
+    implementation 'com.oleksandrkruk:worldtides:0.1.0'
 }
 ```
+
+## Usage
+
+An example demonstrating how to use world tides lib to fetch tides extremes from [worldtides.info](https://www.worldtides.info/apidocs).
+
+### Get Tide Extremes
+
+```Kotlin
+    val worldTides = WorldTides.Builder().build(apiKey)
+    worldTides.getTideExtremes(date, days, lat, lon, object : TidesCallback {
+        override fun result(result: Result<TideExtremes>) {
+            result.onSuccess { tideExtremes ->
+                // use the tide extremes here as you wish
+            }
+        }
+    })
+```
+
+## Limitations
+
+Currently this project is incompatible with Java due to the use of Kotlin [Result](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/) type.
+The plan is to introduce a Java-friendly API in future.
