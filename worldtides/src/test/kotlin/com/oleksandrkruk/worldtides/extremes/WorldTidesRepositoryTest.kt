@@ -1,9 +1,7 @@
 package com.oleksandrkruk.worldtides.extremes
 
-import com.oleksandrkruk.worldtides.TidesCallback
 import com.oleksandrkruk.worldtides.extremes.data.ExtremeResponse
 import com.oleksandrkruk.worldtides.extremes.data.TideExtremesResponse
-import com.oleksandrkruk.worldtides.extremes.models.TideExtremes
 import com.oleksandrkruk.worldtides.extremes.models.TideType
 import okhttp3.MediaType
 import okhttp3.ResponseBody
@@ -54,30 +52,25 @@ class WorldTidesRepositoryTest {
 
         tidesResponse = TideExtremesResponse(200, null, listOf(buildExtremeData()))
 
-        tidesRepository.extremes("" ,1, "", "", "", object : TidesCallback {
-
-            override fun result(result: Result<TideExtremes>) {
-                assertTrue(result.isSuccess)
-                result.onSuccess { tides ->
-                    assertEquals(1, tides.extremes.size)
-                    assertEquals(today.toString(), tides.extremes.first().date.toString())
-                    assertEquals(0.45f, tides.extremes.first().height)
-                    assertEquals(TideType.High, tides.extremes.first().type)
-                }
-
-                result.onFailure {
-                    fail("should never invoke failure on successful response")
-                }
+        tidesRepository.extremes("" ,1, "", "", "") { result ->
+            assertTrue(result.isSuccess)
+            result.onSuccess { tides ->
+                assertEquals(1, tides.extremes.size)
+                assertEquals(today.toString(), tides.extremes.first().date.toString())
+                assertEquals(0.45f, tides.extremes.first().height)
+                assertEquals(TideType.High, tides.extremes.first().type)
             }
-        })
+
+            result.onFailure {
+                fail("should never invoke failure on successful response")
+            }
+        }
     }
 
     @Test
     fun bubblesUpTheErrorOnFailure() {
         withFailedResponse()
-        tidesRepository.extremes("" ,1, "", "", "", object : TidesCallback {
-
-            override fun result(result: Result<TideExtremes>) {
+        tidesRepository.extremes("" ,1, "", "", "") { result ->
                 assertTrue(result.isFailure)
                 result.onSuccess { _ ->
                     fail("should never invoke success on failed response")
@@ -86,8 +79,7 @@ class WorldTidesRepositoryTest {
                 result.onFailure {
                     assertEquals(Error::class, it::class)
                 }
-            }
-        })
+        }
     }
 
     private fun buildExtremeData(

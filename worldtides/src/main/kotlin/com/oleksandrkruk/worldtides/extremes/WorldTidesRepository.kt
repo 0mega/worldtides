@@ -1,6 +1,5 @@
 package com.oleksandrkruk.worldtides.extremes
 
-import com.oleksandrkruk.worldtides.TidesCallback
 import com.oleksandrkruk.worldtides.extremes.data.TideExtremesResponse
 import com.oleksandrkruk.worldtides.extremes.models.Extreme
 import com.oleksandrkruk.worldtides.extremes.models.TideExtremes
@@ -15,10 +14,10 @@ internal class WorldTidesRepository(
     private val dateFormat: SimpleDateFormat
 ) {
 
-    fun extremes(date: String, days: Int, lat: String, lon: String, apiKey: String, callback: TidesCallback) {
+    fun extremes(date: String, days: Int, lat: String, lon: String, apiKey: String, callback: (Result<TideExtremes>) -> Unit) {
         tidesService.extremes(date, days, lat, lon, apiKey).enqueue(object : Callback<TideExtremesResponse> {
             override fun onFailure(call: Call<TideExtremesResponse>, t: Throwable) {
-                callback.result(Result.failure(t))
+                callback(Result.failure(t))
             }
 
             override fun onResponse(call: Call<TideExtremesResponse>, response: Response<TideExtremesResponse>) {
@@ -28,12 +27,12 @@ internal class WorldTidesRepository(
                             Extreme(dateFormat.parse(extreme.date), extreme.height, TideType.valueOf(extreme.type))
                         }
                         val tideExtremes = TideExtremes(extremes)
-                        callback.result(Result.success(tideExtremes))
+                        callback(Result.success(tideExtremes))
                     } ?: run {
-                        callback.result(Result.failure(Error("Response is successful but failed getting body")))
+                        callback(Result.failure(Error("Response is successful but failed getting body")))
                     }
                 } else {
-                    callback.result(Result.failure(Error("Response body is null or response is not successful")))
+                    callback(Result.failure(Error("Response body is null or response is not successful")))
                 }
             }
         })
