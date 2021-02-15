@@ -43,8 +43,6 @@ An example demonstrating how to use world tides lib to fetch tides extremes from
 
 ## Limitations
 
-- Currently this project is incompatible with Java due to the use of Kotlin [Result](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/) type.
-The plan is to introduce a Java-friendly API in future.
 - This lib uses Retrofit and OkHttp and at the moment it's not possible to pass in you existing OkHttp or other client
 to be used by retrofit. The plan is to allow the user of the lib to pass in the client to avoid creating multiple
 clients in your app.

@@ -3,7 +3,6 @@ package com.oleksandrkruk.worldtides
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
 import java.util.*
 
 class WorldTidesTest {
@@ -14,12 +13,12 @@ class WorldTidesTest {
         Assertions.assertNotNull(worldTides)
     }
 
+    // TODO this is not an optimal test. Need to improve it by testing the invocation of the dependencies.
     @Test
     @DisplayName("exposes method to get tide extremes")
-    fun invokesRepository() {
+    fun providesKotlinIdiomaticApiForExtremes() {
         val builder = WorldTides.Builder()
         val worldTides = builder.build("someKey")
-        val callbackMock = Mockito.mock(TidesCallback::class.java)
-        worldTides.getTideExtremes(Date(), 5, "someLat", "someLon", callbackMock)
+        worldTides.getTideExtremes(Date(), 5, "someLat", "someLon") {}
     }
 }
