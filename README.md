@@ -20,7 +20,7 @@ Declare the dependency in the module `build.gradle`:
 
 ```
 dependencies {
-    implementation 'com.oleksandrkruk:worldtides:0.1.0'
+    implementation 'com.oleksandrkruk:worldtides:1.0.0'
 }
 ```
 
