@@ -24,11 +24,16 @@ dependencies {
 }
 ```
 
+## Versioning
+
+This project follows [Semantic Versioning](https://semver.org/).
+
 ## Usage
 
 An example demonstrating how to use world tides lib to fetch tides extremes from [worldtides.info](https://www.worldtides.info/apidocs).
 
-### Get Tide Extremes
+<details open>
+<summary>Get Tide Extremes - Kotlin</summary>
 
 ```Kotlin
     val worldTides = WorldTides.Builder().build(apiKey)
@@ -40,6 +45,28 @@ An example demonstrating how to use world tides lib to fetch tides extremes from
         }
     })
 ```
+</details>
+
+
+<details>
+<summary>Get Tide Extremes - Java</summary>
+
+```Java
+    WorldTides wt = (new WorldTides.Builder()).build(apiKey);
+    wt.getTideExtremes(date, 1, latitude, longitude, new TidesCallback() {
+        @Override
+        public void onResult(@NotNull TideExtremes tides) {
+            // Use the tide extremes
+        }
+
+        @Override
+        public void onError() {
+            // Report an error
+        }
+    });
+```
+</details>
+
 
 ## Limitations
 
