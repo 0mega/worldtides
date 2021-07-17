@@ -8,12 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 1.0.0 - 2021-02-15
 
 ### Added
+
 - Compatibility with Java
 
 ### Changed
+
 - BREAKING: Kotlin API changed
 
 ## 0.1.0 - 2021-01-03
 
 ### Added
+
 - Provide an API to fetch tide extremes from worldtides.info
