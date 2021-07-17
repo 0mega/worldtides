@@ -1,21 +1,25 @@
 package com.oleksandrkruk.worldtides
 
-import com.oleksandrkruk.worldtides.extremes.WorldTidesRepository
 import com.oleksandrkruk.worldtides.extremes.models.TideExtremes
 import java.text.SimpleDateFormat
 import java.util.*
 
 class WorldTides private constructor(
-        private val apiKey: String,
-        private val tidesRepository: WorldTidesRepository,
-        private val inputDateFormat: SimpleDateFormat
+    private val apiKey: String,
+    private val tidesRepository: WorldTidesRepository,
+    private val inputDateFormat: SimpleDateFormat
     ) {
 
     class Builder {
         private val apiDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ", Locale.US)
         private val inputDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         private val tidesGateway by lazy { RetrofitClient("https://www.worldtides.info/api/").tidesService }
-        private val tidesRepository: WorldTidesRepository by lazy { WorldTidesRepository(tidesGateway, apiDateFormat) }
+        private val tidesRepository: WorldTidesRepository by lazy {
+            WorldTidesRepository(
+                tidesGateway,
+                apiDateFormat
+            )
+        }
 
         /**
          * Create an instance of [WorldTides] using a given [apiKey].

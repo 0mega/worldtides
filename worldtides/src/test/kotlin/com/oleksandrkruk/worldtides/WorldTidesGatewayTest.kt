@@ -1,6 +1,5 @@
-package com.oleksandrkruk.worldtides.extremes
+package com.oleksandrkruk.worldtides
 
-import com.oleksandrkruk.worldtides.RetrofitClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.Assert

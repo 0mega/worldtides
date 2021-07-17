@@ -1,4 +1,4 @@
-package com.oleksandrkruk.worldtides.extremes
+package com.oleksandrkruk.worldtides
 
 import com.oleksandrkruk.worldtides.extremes.data.ExtremeResponse
 import com.oleksandrkruk.worldtides.extremes.data.TideExtremesResponse
@@ -43,7 +43,10 @@ class WorldTidesRepositoryTest {
         MockitoAnnotations.initMocks(this)
 
         `when`(dateFormatterMock.parse(ArgumentMatchers.any())).thenReturn(today)
-        tidesRepository = WorldTidesRepository(gatewayMock, dateFormatterMock)
+        tidesRepository = WorldTidesRepository(
+            gatewayMock,
+            dateFormatterMock
+        )
     }
 
     @Test

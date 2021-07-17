@@ -1,4 +1,4 @@
-package com.oleksandrkruk.worldtides.extremes
+package com.oleksandrkruk.worldtides
 
 import com.oleksandrkruk.worldtides.extremes.data.TideExtremesResponse
 import com.oleksandrkruk.worldtides.extremes.models.Extreme
