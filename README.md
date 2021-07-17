@@ -1,13 +1,14 @@
-[![](https://jitpack.io/v/com.oleksandrkruk/worldtides.svg)](https://jitpack.io/#com.oleksandrkruk/worldtides)
-
 # WorldTides Client
-Kotlin Client for [World Tides API](https://www.worldtides.info/apidocs)
+
+[![build status](https://jitpack.io/v/com.oleksandrkruk/worldtides.svg)](https://jitpack.io/#com.oleksandrkruk/worldtides)
+
+Client for [World Tides API](https://www.worldtides.info/apidocs) compatible with Android, Kotlin and Java applications.
 
 ## Download
 
 Add the JitPack repo to your root `build.gradle`:
 
-```
+```gradle
 allprojects {
     repositories {
         ...
@@ -16,21 +17,26 @@ allprojects {
 }
 ```
 
-Declare the dependency in the module `build.gradle`:
+Declare the dependency in the module's `build.gradle`:
 
-```
+```gradle
 dependencies {
     implementation 'com.oleksandrkruk:worldtides:1.0.0'
 }
 ```
 
-## Versioning
+## Supported WorldTides API calls
 
-This project follows [Semantic Versioning](https://semver.org/).
+| API Request  | API version | Supported | Planned |
+| -----------  | ----------- | --------- | ------- |
+| Extremes     | v2          | Yes       | Yes     |
+| Heights      | v2          | No        | Yes     |
+| Stations     | v2          | No        | Yes     |
+| Datum        | v2          | No        | Yes     |
 
 ## Usage
 
-An example demonstrating how to use world tides lib to fetch tides extremes from [worldtides.info](https://www.worldtides.info/apidocs).
+Following snippet demonstrates how to use world tides lib to fetch tides extremes from [worldtides.info](https://www.worldtides.info/apidocs).
 
 <details open>
 <summary>Get Tide Extremes - Kotlin</summary>
@@ -45,8 +51,8 @@ An example demonstrating how to use world tides lib to fetch tides extremes from
         }
     })
 ```
-</details>
 
+</details>
 
 <details>
 <summary>Get Tide Extremes - Java</summary>
@@ -65,11 +71,13 @@ An example demonstrating how to use world tides lib to fetch tides extremes from
         }
     });
 ```
+
 </details>
 
+## Versioning
+
+This project follows [Semantic Versioning](https://semver.org/).
 
 ## Limitations
 
-- This lib uses Retrofit and OkHttp and at the moment it's not possible to pass in you existing OkHttp or other client
-to be used by retrofit. The plan is to allow the user of the lib to pass in the client to avoid creating multiple
-clients in your app.
+- This lib uses Retrofit and OkHttp and at the moment it's not possible to pass in you existing OkHttp or other client to be used by retrofit. The plan is to allow the user of this lib to pass in the client to avoid creating multiple clients in your app.
