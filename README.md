@@ -1,6 +1,6 @@
 # WorldTides Client
 
-[![build status](https://jitpack.io/v/com.oleksandrkruk/worldtides.svg)](https://jitpack.io/#com.oleksandrkruk/worldtides)
+[![build status](https://jitpack.io/v/com.oleksandrkruk/worldtides.svg)](https://jitpack.io/#com.oleksandrkruk/worldtides) [![CI](https://github.com/0mega/worldtides/actions/workflows/main.yml/badge.svg)](https://github.com/0mega/worldtides/actions/workflows/main.yml)
 
 Client for [World Tides API](https://www.worldtides.info/apidocs) compatible with Android, Kotlin and Java applications.
 
