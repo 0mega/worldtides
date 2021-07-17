@@ -1,0 +1,7 @@
+  # Allow inline HTM
+  MD033: false
+  # Allow line length over 80 chars
+  MD013: false
+  # Allow repeating title when nested in different sections (for changelog)
+  MD024:
+    allow_different_nesting: true
