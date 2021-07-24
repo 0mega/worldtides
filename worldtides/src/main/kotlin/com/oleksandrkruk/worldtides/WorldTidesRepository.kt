@@ -8,6 +8,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
+import java.util.TimeZone
 
 internal class WorldTidesRepository(
     private val tidesService: WorldTidesGateway,
@@ -26,7 +27,8 @@ internal class WorldTidesRepository(
                         val extremes = tidesResponse.extremes.map { extreme ->
                             Extreme(dateFormat.parse(extreme.date), extreme.height, TideType.valueOf(extreme.type))
                         }
-                        val tideExtremes = TideExtremes(extremes)
+                        val timeZone = TimeZone.getTimeZone(tidesResponse.timezone)
+                        val tideExtremes = TideExtremes(extremes, timeZone)
                         callback(Result.success(tideExtremes))
                     } ?: run {
                         callback(Result.failure(Error("Response is successful but failed getting body")))

@@ -53,7 +53,12 @@ class WorldTidesRepositoryTest {
     fun mapsCorrectlyFromDataToModel() {
         withSuccessfulResponse()
 
-        tidesResponse = TideExtremesResponse(200, null, listOf(buildExtremeData()))
+        tidesResponse = TideExtremesResponse(
+            200,
+            null,
+            listOf(buildExtremeData()),
+            "Atlantic/Azores"
+        )
 
         tidesRepository.extremes("" ,1, "", "", "") { result ->
             assertTrue(result.isSuccess)
