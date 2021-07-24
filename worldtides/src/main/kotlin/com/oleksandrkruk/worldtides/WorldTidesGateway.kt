@@ -12,6 +12,7 @@ internal interface WorldTidesGateway {
         @Query("days") days: Int,
         @Query("lat") lat: String,
         @Query("lon") lon: String,
-        @Query("key") apiKey: String
+        @Query("key") apiKey: String,
+        @Query("localtime") localTime: Boolean? = true
     ) : Call<TideExtremesResponse>
 }

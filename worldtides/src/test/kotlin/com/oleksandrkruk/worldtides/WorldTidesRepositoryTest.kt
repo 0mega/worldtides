@@ -87,7 +87,7 @@ class WorldTidesRepositoryTest {
 
     private fun buildExtremeData(
         dt: Long = 6453415263L,
-        date: String = "2021-02-17T05:37+0000",
+        date: String = "2021-02-17T05:37:08+00:00",
         height: Float = 0.45f,
         type: String = "High"
     ) : ExtremeResponse {

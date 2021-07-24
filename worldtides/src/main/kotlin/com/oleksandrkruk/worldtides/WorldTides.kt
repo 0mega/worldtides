@@ -11,7 +11,7 @@ class WorldTides private constructor(
     ) {
 
     class Builder {
-        private val apiDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ", Locale.US)
+        private val apiDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.US)
         private val inputDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         private val tidesGateway by lazy { RetrofitClient("https://www.worldtides.info/api/").tidesService }
         private val tidesRepository: WorldTidesRepository by lazy {

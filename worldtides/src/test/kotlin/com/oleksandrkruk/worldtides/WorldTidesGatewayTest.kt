@@ -23,22 +23,23 @@ class WorldTidesGatewayTest {
                 "  \"responseLon\": -25.6667,\n" +
                 "  \"atlas\": \"FES\",\n" +
                 "  \"station\": \"PONTA DELGADA\",\n" +
+                "  \"timezone\": \"Atlantic/Azores\",\n" +
                 "  \"extremes\": [\n" +
                 "    {\n" +
                 "      \"dt\": 1613540259,\n" +
-                "      \"date\": \"2021-02-17T05:37+0000\",\n" +
+                "      \"date\": \"2021-02-17T05:37:08+00:00\",\n" +
                 "      \"height\": 0.485,\n" +
                 "      \"type\": \"High\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"dt\": 1613562548,\n" +
-                "      \"date\": \"2021-02-17T11:49+0000\",\n" +
+                "      \"date\": \"2021-02-17T11:49:30+00:00\",\n" +
                 "      \"height\": -0.425,\n" +
                 "      \"type\": \"Low\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"dt\": 1613584701,\n" +
-                "      \"date\": \"2021-02-17T17:58+0000\",\n" +
+                "      \"date\": \"2021-02-17T17:58:18+00:00\",\n" +
                 "      \"height\": 0.368,\n" +
                 "      \"type\": \"High\"\n" +
                 "    }]}")
@@ -101,6 +102,21 @@ class WorldTidesGatewayTest {
     }
 
     @Test
+    fun containsLocaltimeInQueryParamsByDefault() {
+        val response = service?.extremes("foo", 1, "bar", "baz", "someKey")?.execute()
+        val requestUrl = response?.raw()?.request()?.url()
+        Assert.assertTrue(requestUrl!!.queryParameterNames().contains("localtime"))
+        Assert.assertEquals("true", requestUrl.queryParameter("localtime"))
+    }
+
+    @Test
+    fun skipsLocaltimeInQueryParamsWhenNull() {
+        val response = service?.extremes("foo", 1, "bar", "baz", "someKey", null)?.execute()
+        val requestUrl = response?.raw()?.request()?.url()
+        Assert.assertFalse(requestUrl!!.queryParameterNames().contains("localtime"))
+    }
+
+    @Test
     fun parsesThreeTideExtremesFromMockJsonResponse() {
         val response = service?.extremes("foo", 1, "bar", "baz", "key")?.execute()
         Assert.assertTrue(response!!.isSuccessful)
@@ -121,9 +137,9 @@ class WorldTidesGatewayTest {
         val response = service?.extremes("foo", 1, "bar", "baz", "key")?.execute()
         Assert.assertTrue(response!!.isSuccessful)
         Assert.assertEquals(listOf(
-            "2021-02-17T05:37+0000",
-            "2021-02-17T11:49+0000",
-            "2021-02-17T17:58+0000"),
+            "2021-02-17T05:37:08+00:00",
+            "2021-02-17T11:49:30+00:00",
+            "2021-02-17T17:58:18+00:00"),
             response.body()?.extremes?.map { extreme -> extreme.date })
     }
 }
