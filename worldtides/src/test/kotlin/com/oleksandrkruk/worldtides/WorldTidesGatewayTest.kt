@@ -102,18 +102,10 @@ class WorldTidesGatewayTest {
     }
 
     @Test
-    fun containsLocaltimeInQueryParamsByDefault() {
+    fun containsLocaltimeInQueryParams() {
         val response = service?.extremes("foo", 1, "bar", "baz", "someKey")?.execute()
         val requestUrl = response?.raw()?.request()?.url()
         Assert.assertTrue(requestUrl!!.queryParameterNames().contains("localtime"))
-        Assert.assertEquals("true", requestUrl.queryParameter("localtime"))
-    }
-
-    @Test
-    fun skipsLocaltimeInQueryParamsWhenNull() {
-        val response = service?.extremes("foo", 1, "bar", "baz", "someKey", null)?.execute()
-        val requestUrl = response?.raw()?.request()?.url()
-        Assert.assertFalse(requestUrl!!.queryParameterNames().contains("localtime"))
     }
 
     @Test
