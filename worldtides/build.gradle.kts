@@ -1,7 +1,7 @@
 
 plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
-    id("org.jetbrains.kotlin.jvm") version "1.4.10"
+    id("org.jetbrains.kotlin.jvm") version "1.9.20"
 
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
@@ -14,8 +14,8 @@ plugins {
 }
 
 repositories {
-    // Use JCenter for resolving dependencies.
-    jcenter()
+    // Use Maven central for resolving dependencies.
+    mavenCentral()
 }
 
 dependencies {
@@ -34,14 +34,12 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:1.11.0")
 
     // Use the Kotlin test library.
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-    // Use the Kotlin JUnit integration.
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+    testImplementation(kotlin("test"))
     testImplementation("org.assertj:assertj-core:3.12.2")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.2")
     testImplementation("com.squareup.okhttp3:mockwebserver:3.12.0")
-    testImplementation("org.mockito:mockito-core:3.3.1")
+    testImplementation("org.mockito:mockito-core:5.13.0")
 }
 
 group = project.property("GROUP") as String

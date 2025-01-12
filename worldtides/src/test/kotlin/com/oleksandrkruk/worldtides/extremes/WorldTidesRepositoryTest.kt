@@ -5,7 +5,8 @@ import com.oleksandrkruk.worldtides.extremes.data.TideExtremesResponse
 import com.oleksandrkruk.worldtides.extremes.models.TideType
 import okhttp3.MediaType
 import okhttp3.ResponseBody
-import org.junit.Assert.assertEquals
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers
@@ -20,7 +21,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.test.assertTrue
 import kotlin.test.fail
 
 @Suppress("UNCHECKED_CAST")
@@ -40,7 +40,7 @@ class WorldTidesRepositoryTest {
 
     @BeforeEach
     fun setup() {
-        MockitoAnnotations.initMocks(this)
+        MockitoAnnotations.openMocks(this)
 
         `when`(dateFormatterMock.parse(ArgumentMatchers.any())).thenReturn(today)
         tidesRepository = WorldTidesRepository(gatewayMock, dateFormatterMock)
