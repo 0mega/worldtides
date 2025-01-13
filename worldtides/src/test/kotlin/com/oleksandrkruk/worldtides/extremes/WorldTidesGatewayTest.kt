@@ -3,8 +3,9 @@ package com.oleksandrkruk.worldtides.extremes
 import com.oleksandrkruk.worldtides.RetrofitClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import org.junit.Assert
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -58,61 +59,61 @@ class WorldTidesGatewayTest {
     fun containsExtremesInQueryParams() {
         val response = service?.extremes("foo", 1, "bar", "baz", "key")?.execute()
         val requestUrl = response?.raw()?.request()?.url()
-        Assert.assertTrue(requestUrl!!.queryParameterNames().contains("extremes"))
+        assertTrue(requestUrl!!.queryParameterNames().contains("extremes"))
     }
 
     @Test
     fun containsDateInQueryParams() {
         val response = service?.extremes("foo", 1, "bar", "baz", "key")?.execute()
         val requestUrl = response?.raw()?.request()?.url()
-        Assert.assertTrue(requestUrl!!.queryParameterNames().contains("date"))
-        Assert.assertEquals("foo", requestUrl.queryParameter("date"))
+        assertTrue(requestUrl!!.queryParameterNames().contains("date"))
+        assertEquals("foo", requestUrl.queryParameter("date"))
     }
 
     @Test
     fun containsDaysInQueryParams() {
         val response = service?.extremes("foo", 1, "bar", "baz", "key")?.execute()
         val requestUrl = response?.raw()?.request()?.url()
-        Assert.assertTrue(requestUrl!!.queryParameterNames().contains("days"))
-        Assert.assertEquals("1", requestUrl.queryParameter("days"))
+        assertTrue(requestUrl!!.queryParameterNames().contains("days"))
+        assertEquals("1", requestUrl.queryParameter("days"))
     }
 
     @Test
     fun containsLatInQueryParams() {
         val response = service?.extremes("foo", 1, "25.134", "baz", "key")?.execute()
         val requestUrl = response?.raw()?.request()?.url()
-        Assert.assertTrue(requestUrl!!.queryParameterNames().contains("lat"))
-        Assert.assertEquals("25.134", requestUrl.queryParameter("lat"))
+        assertTrue(requestUrl!!.queryParameterNames().contains("lat"))
+        assertEquals("25.134", requestUrl.queryParameter("lat"))
     }
 
     @Test
     fun containsLonInQueryParams() {
         val response = service?.extremes("foo", 1, "bar", "13.948", "key")?.execute()
         val requestUrl = response?.raw()?.request()?.url()
-        Assert.assertTrue(requestUrl!!.queryParameterNames().contains("lon"))
-        Assert.assertEquals("13.948", requestUrl.queryParameter("lon"))
+        assertTrue(requestUrl!!.queryParameterNames().contains("lon"))
+        assertEquals("13.948", requestUrl.queryParameter("lon"))
     }
 
     @Test
     fun containsApiKeyInQueryParams() {
         val response = service?.extremes("foo", 1, "bar", "baz", "someKey")?.execute()
         val requestUrl = response?.raw()?.request()?.url()
-        Assert.assertTrue(requestUrl!!.queryParameterNames().contains("key"))
-        Assert.assertEquals("someKey", requestUrl.queryParameter("key"))
+        assertTrue(requestUrl!!.queryParameterNames().contains("key"))
+        assertEquals("someKey", requestUrl.queryParameter("key"))
     }
 
     @Test
     fun parsesThreeTideExtremesFromMockJsonResponse() {
         val response = service?.extremes("foo", 1, "bar", "baz", "key")?.execute()
-        Assert.assertTrue(response!!.isSuccessful)
-        Assert.assertEquals(3, response.body()?.extremes?.size)
+        assertTrue(response!!.isSuccessful)
+        assertEquals(3, response.body()?.extremes?.size)
     }
 
     @Test
     fun parsesTideExtremeTypesFromMockJsonResponse() {
         val response = service?.extremes("foo", 1, "bar", "baz", "key")?.execute()
-        Assert.assertTrue(response!!.isSuccessful)
-        Assert.assertEquals(
+        assertTrue(response!!.isSuccessful)
+        assertEquals(
             listOf("High", "Low", "High"),
             response.body()?.extremes?.map { extreme -> extreme.type })
     }
@@ -120,8 +121,8 @@ class WorldTidesGatewayTest {
     @Test
     fun parsesTideExtremeDatesFromMockJsonResponse() {
         val response = service?.extremes("foo", 1, "bar", "baz", "key")?.execute()
-        Assert.assertTrue(response!!.isSuccessful)
-        Assert.assertEquals(listOf(
+        assertTrue(response!!.isSuccessful)
+        assertEquals(listOf(
             "2021-02-17T05:37+0000",
             "2021-02-17T11:49+0000",
             "2021-02-17T17:58+0000"),
