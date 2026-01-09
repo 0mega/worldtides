@@ -29,47 +29,135 @@ dependencies {
 
 | API Request  | API version | Supported | Planned |
 | -----------  | ----------- | --------- | ------- |
-| Extremes     | v2          | Yes       | Yes     |
-| Heights      | v2          | No        | Yes     |
+| Extremes     | v2          | Yes       | -       |
+| Heights      | v2          | Yes       | -       |
 | Stations     | v2          | No        | Yes     |
 | Datum        | v2          | No        | Yes     |
 
 ## Usage
 
-Following snippet demonstrates how to use world tides lib to fetch tides extremes from [worldtides.info](https://www.worldtides.info/apidocs).
+### Get Tide Extremes
 
 <details open>
-<summary>Get Tide Extremes - Kotlin</summary>
+<summary>Kotlin</summary>
 
-```Kotlin
-    val worldTides = WorldTides.Builder().build(apiKey)
-    worldTides.getTideExtremes(date, days, lat, lon, object : TidesCallback {
-        override fun result(result: Result<TideExtremes>) {
-            result.onSuccess { tideExtremes ->
-                // use the tide extremes here as you wish
-            }
+```kotlin
+val worldTides = WorldTides.Builder().build(apiKey)
+worldTides.getTideExtremes(date, days, lat, lon) { result ->
+    result.onSuccess { tideExtremes ->
+        tideExtremes.extremes.forEach { extreme ->
+            println("${extreme.type} at ${extreme.date}: ${extreme.height}m")
         }
-    })
+    }
+    result.onFailure { error ->
+        println("Error: ${error.message}")
+    }
+}
 ```
 
 </details>
 
 <details>
-<summary>Get Tide Extremes - Java</summary>
+<summary>Java</summary>
 
-```Java
-    WorldTides wt = (new WorldTides.Builder()).build(apiKey);
-    wt.getTideExtremes(date, 1, latitude, longitude, new TidesCallback() {
-        @Override
-        public void onResult(@NotNull TideExtremes tides) {
-            // Use the tide extremes
-        }
+```java
+WorldTides wt = new WorldTides.Builder().build(apiKey);
+wt.getTideExtremes(date, 7, lat, lon, new TidesCallback<TideExtremes>() {
+    @Override
+    public void result(TideExtremes tides) {
+        // Use the tide extremes
+    }
 
-        @Override
-        public void onError() {
-            // Report an error
+    @Override
+    public void error(Error error) {
+        // Handle error
+    }
+});
+```
+
+</details>
+
+### Get Tide Heights
+
+<details open>
+<summary>Kotlin</summary>
+
+```kotlin
+val worldTides = WorldTides.Builder().build(apiKey)
+worldTides.getTideHeights(date, days, lat, lon) { result ->
+    result.onSuccess { tideHeights ->
+        tideHeights.heights.forEach { height ->
+            println("Height at ${height.date}: ${height.height}m")
         }
-    });
+    }
+    result.onFailure { error ->
+        println("Error: ${error.message}")
+    }
+}
+```
+
+</details>
+
+<details>
+<summary>Java</summary>
+
+```java
+WorldTides wt = new WorldTides.Builder().build(apiKey);
+wt.getTideHeights(date, 7, lat, lon, new TidesCallback<TideHeights>() {
+    @Override
+    public void result(TideHeights heights) {
+        // Use the tide heights
+    }
+
+    @Override
+    public void error(Error error) {
+        // Handle error
+    }
+});
+```
+
+</details>
+
+### Get Flexible Tide Data (Combined)
+
+Fetch multiple data types in a single API call:
+
+<details open>
+<summary>Kotlin</summary>
+
+```kotlin
+val dataTypes = listOf(TideDataType.HEIGHTS, TideDataType.EXTREMES)
+worldTides.getTides(date, days, lat, lon, dataTypes) { result ->
+    result.onSuccess { tides ->
+        tides.heights?.let { println("Heights: ${it.heights.size} points") }
+        tides.extremes?.let { println("Extremes: ${it.extremes.size} points") }
+    }
+}
+```
+
+</details>
+
+<details>
+<summary>Java</summary>
+
+```java
+List<TideDataType> dataTypes = Arrays.asList(TideDataType.HEIGHTS, TideDataType.EXTREMES);
+wt.getTides(date, 7, lat, lon, dataTypes, new TidesCallback<Tides>() {
+    @Override
+    public void result(Tides tides) {
+        if (tides.getHeights() != null) {
+            // Use heights data
+        }
+        if (tides.getExtremes() != null) {
+            // Use extremes data
+        }
+    }
+
+    @Override
+    public void error(Error error) {
+        // Handle error
+    }
+});
 ```
 
 </details>
