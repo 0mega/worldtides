@@ -1,6 +1,4 @@
 package com.oleksandrkruk.worldtides
-
-import com.oleksandrkruk.worldtides.extremes.WorldTidesGateway
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
