@@ -17,10 +17,10 @@
 
 **Purpose**: Move shared infrastructure to package root level.
 
-- [ ] T001 Move `WorldTidesRepository.kt` from `extremes/` to package root `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTidesRepository.kt`
-- [ ] T002 Move `WorldTidesGateway.kt` from `extremes/` to package root `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTidesGateway.kt`
-- [ ] T003 Update imports in `WorldTides.kt` to reference new package locations
-- [ ] T004 Verify project compiles and existing tests pass after refactoring
+- [x] T001 Move `WorldTidesRepository.kt` from `extremes/` to package root `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTidesRepository.kt`
+- [x] T002 Move `WorldTidesGateway.kt` from `extremes/` to package root `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTidesGateway.kt`
+- [x] T003 Update imports in `WorldTides.kt` to reference new package locations
+- [x] T004 Verify project compiles and existing tests pass after refactoring
 
 **Checkpoint**: Shared infrastructure relocated. Codebase compiles and tests pass.
 
@@ -37,10 +37,10 @@
 > [!WARNING]
 > **Breaking Change**: This refactors the existing `TidesCallback` interface.
 
-- [ ] T005 Refactor `TidesCallback.kt` to `TidesCallback<T>` in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/TidesCallback.kt`
-- [ ] T006 Update `WorldTides.getTideExtremes` Java overload to use `TidesCallback<TideExtremes>` in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTides.kt`
-- [ ] T007 Update `WorldTidesRepository.extremes` to work with generic callback in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTidesRepository.kt`
-- [ ] T008 Verify project compiles and existing `getTideExtremes` tests pass
+- [x] T005 Refactor `TidesCallback.kt` to `TidesCallback<T>` in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/TidesCallback.kt`
+- [x] T006 Update `WorldTides.getTideExtremes` Java overload to use `TidesCallback<TideExtremes>` in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTides.kt`
+- [x] T007 Update `WorldTidesRepository.extremes` to work with generic callback in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTidesRepository.kt`
+- [x] T008 Verify project compiles and existing `getTideExtremes` tests pass
 
 **Checkpoint**: Generic callback ready. Existing functionality unchanged. Codebase compiles and tests pass.
 
@@ -56,28 +56,28 @@
 
 #### Models
 
-- [ ] T009 [P] [US1] Create `Height.kt` data class in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/heights/models/Height.kt`
-- [ ] T010 [P] [US1] Create `TideHeights.kt` wrapper in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/heights/models/TideHeights.kt`
+- [x] T009 [P] [US1] Create `Height.kt` data class in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/heights/models/Height.kt`
+- [x] T010 [P] [US1] Create `TideHeights.kt` wrapper in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/heights/models/TideHeights.kt`
 
 #### DTOs
 
-- [ ] T011 [P] [US1] Create `HeightResponse.kt` DTO in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/heights/data/HeightResponse.kt`
-- [ ] T012 [P] [US1] Create `TideHeightsResponse.kt` DTO in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/heights/data/TideHeightsResponse.kt`
+- [x] T011 [P] [US1] Create `HeightResponse.kt` DTO in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/heights/data/HeightResponse.kt`
+- [x] T012 [P] [US1] Create `TideHeightsResponse.kt` DTO in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/heights/data/TideHeightsResponse.kt`
 
 #### Gateway & Repository
 
-- [ ] T013 [US1] Add `heights` endpoint to `WorldTidesGateway.kt` in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTidesGateway.kt`
-- [ ] T014 [US1] Add `heights` method to `WorldTidesRepository.kt` in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTidesRepository.kt`
+- [x] T013 [US1] Add `heights` endpoint to `WorldTidesGateway.kt` in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTidesGateway.kt`
+- [x] T014 [US1] Add `heights` method to `WorldTidesRepository.kt` in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTidesRepository.kt`
 
 #### Public API
 
-- [ ] T015 [US1] Add `getTideHeights` method (Kotlin lambda) to `WorldTides.kt` in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTides.kt`
-- [ ] T016 [US1] Add `getTideHeights` method (Java callback) to `WorldTides.kt` in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTides.kt`
+- [x] T015 [US1] Add `getTideHeights` method (Kotlin lambda) to `WorldTides.kt` in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTides.kt`
+- [x] T016 [US1] Add `getTideHeights` method (Java callback) to `WorldTides.kt` in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTides.kt`
 
 #### Documentation
 
-- [ ] T017 [US1] Update README.md with Heights API usage examples in `README.md`
-- [ ] T018 [US1] Verify project compiles and `getTideHeights` can be called
+- [x] T017 [US1] Update README.md with Heights API usage examples in `README.md`
+- [x] T018 [US1] Verify project compiles and `getTideHeights` can be called
 
 **Checkpoint**: User Story 1 complete. Developers can fetch tide heights. Codebase compiles and tests pass.
 
@@ -93,24 +93,24 @@
 
 #### Shared Models
 
-- [ ] T019 [P] [US2] Create `TideDataType.kt` enum in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/models/TideDataType.kt`
-- [ ] T020 [P] [US2] Create `Tides.kt` wrapper in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/models/Tides.kt`
-- [ ] T021 [P] [US2] Create `TidesResponse.kt` DTO in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/models/TidesResponse.kt`
+- [x] T019 [P] [US2] Create `TideDataType.kt` enum in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/models/TideDataType.kt`
+- [x] T020 [P] [US2] Create `Tides.kt` wrapper in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/models/Tides.kt`
+- [x] T021 [P] [US2] Create `TidesResponse.kt` DTO in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/models/TidesResponse.kt`
 
 #### Gateway & Repository
 
-- [ ] T022 [US2] Add dynamic `tides` endpoint to `WorldTidesGateway.kt` that accepts query parameters in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTidesGateway.kt`
-- [ ] T023 [US2] Add `tides` method to `WorldTidesRepository.kt` that builds query from `TideDataType` list in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTidesRepository.kt`
+- [x] T022 [US2] Add dynamic `tides` endpoint to `WorldTidesGateway.kt` that accepts query parameters in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTidesGateway.kt`
+- [x] T023 [US2] Add `tides` method to `WorldTidesRepository.kt` that builds query from `TideDataType` list in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTidesRepository.kt`
 
 #### Public API
 
-- [ ] T024 [US2] Add `getTides` method (Kotlin lambda) to `WorldTides.kt` in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTides.kt`
-- [ ] T025 [US2] Add `getTides` method (Java callback) to `WorldTides.kt` in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTides.kt`
+- [x] T024 [US2] Add `getTides` method (Kotlin lambda) to `WorldTides.kt` in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTides.kt`
+- [x] T025 [US2] Add `getTides` method (Java callback) to `WorldTides.kt` in `worldtides/src/main/kotlin/com/oleksandrkruk/worldtides/WorldTides.kt`
 
 #### Documentation
 
-- [ ] T026 [US2] Update README.md with `getTides` usage examples in `README.md`
-- [ ] T027 [US2] Verify project compiles and `getTides` can be called with multiple data types
+- [x] T026 [US2] Update README.md with `getTides` usage examples in `README.md`
+- [x] T027 [US2] Verify project compiles and `getTides` can be called with multiple data types
 
 **Checkpoint**: User Story 2 complete. Developers can fetch flexible tide data. Codebase compiles and tests pass.
 
