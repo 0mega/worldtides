@@ -1,8 +1,12 @@
 package com.oleksandrkruk.worldtides
 
-import com.oleksandrkruk.worldtides.extremes.models.TideExtremes
-
-interface TidesCallback {
-    fun result(tides: TideExtremes)
+/**
+ * Generic callback interface for WorldTides API responses.
+ * Supports TideExtremes, TideHeights, Tides, and future types.
+ *
+ * @param T The result type.
+ */
+interface TidesCallback<T> {
+    fun result(data: T)
     fun error(error: Error)
 }
