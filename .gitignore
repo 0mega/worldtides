@@ -71,3 +71,6 @@ local.properties
 .idea/modules
 *.iml
 *.ipr
+
+# Agent
+.agent
