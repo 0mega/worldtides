@@ -120,10 +120,10 @@
 
 **Purpose**: Final cleanup and documentation.
 
-- [ ] T028 Update README.md supported API table (mark Heights as Yes) in `README.md`
-- [ ] T029 Add KDoc/Javadoc to all new public methods and classes
-- [ ] T030 Run full test suite and verify all tests pass
-- [ ] T031 Verify quickstart.md examples compile and work
+- [x] T028 Update README.md supported API table (mark Heights as Yes) in `README.md`
+- [x] T029 Add KDoc/Javadoc to all new public methods and classes
+- [x] T030 Run full test suite and verify all tests pass
+- [x] T031 Verify quickstart.md examples compile and work
 
 ---
 
