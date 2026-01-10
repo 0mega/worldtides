@@ -1,7 +1,10 @@
 package com.oleksandrkruk.worldtides.extremes
 
+import com.oleksandrkruk.worldtides.WorldTidesGateway
+import com.oleksandrkruk.worldtides.WorldTidesRepository
 import com.oleksandrkruk.worldtides.extremes.data.ExtremeResponse
 import com.oleksandrkruk.worldtides.extremes.data.TideExtremesResponse
+import com.oleksandrkruk.worldtides.extremes.models.TideExtremes
 import com.oleksandrkruk.worldtides.extremes.models.TideType
 import okhttp3.MediaType
 import okhttp3.ResponseBody
@@ -52,9 +55,9 @@ class WorldTidesRepositoryTest {
 
         tidesResponse = TideExtremesResponse(200, null, listOf(buildExtremeData()))
 
-        tidesRepository.extremes("" ,1, "", "", "") { result ->
+        tidesRepository.extremes("" ,1, "", "", "") { result: Result<TideExtremes> ->
             assertTrue(result.isSuccess)
-            result.onSuccess { tides ->
+            result.onSuccess { tides: TideExtremes ->
                 assertEquals(1, tides.extremes.size)
                 assertEquals(today.toString(), tides.extremes.first().date.toString())
                 assertEquals(0.45f, tides.extremes.first().height)
@@ -70,14 +73,14 @@ class WorldTidesRepositoryTest {
     @Test
     fun bubblesUpTheErrorOnFailure() {
         withFailedResponse()
-        tidesRepository.extremes("" ,1, "", "", "") { result ->
+        tidesRepository.extremes("" ,1, "", "", "") { result: Result<TideExtremes> ->
                 assertTrue(result.isFailure)
-                result.onSuccess { _ ->
+                result.onSuccess { _: TideExtremes ->
                     fail("should never invoke success on failed response")
                 }
 
-                result.onFailure {
-                    assertEquals(Error::class, it::class)
+                result.onFailure { error: Throwable ->
+                    assertEquals(Error::class, error::class)
                 }
         }
     }
