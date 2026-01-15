@@ -1,7 +1,9 @@
 package com.oleksandrkruk.worldtides
 
-import com.oleksandrkruk.worldtides.extremes.WorldTidesRepository
 import com.oleksandrkruk.worldtides.extremes.models.TideExtremes
+import com.oleksandrkruk.worldtides.heights.models.TideHeights
+import com.oleksandrkruk.worldtides.models.TideDataType
+import com.oleksandrkruk.worldtides.models.Tides
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -64,11 +66,79 @@ class WorldTides private constructor(
      * @param [callback] is the callback that will return either tide or an error.
      *
      */
-    fun getTideExtremes(date: Date, days: Int, lat: String, lon: String, callback: TidesCallback) {
+    fun getTideExtremes(date: Date, days: Int, lat: String, lon: String, callback: TidesCallback<TideExtremes>) {
         val dateStr = inputDateFormat.format(date)
         tidesRepository.extremes(dateStr, days, lat, lon, apiKey) { result ->
             result.onFailure { callback.error(Error(it)) }
             result.onSuccess { callback.result(it) }
         }
     }
+
+    /**
+     * Returns the predicted tide heights between [date] and the number of [days] in future.
+     *
+     * @param [date] should be the starting date from which the tide heights prediction are requested.
+     * @param [days] should be the number of days for which tide heights are requested.
+     * @param [lat] is the latitude of the location for which the tides are requested.
+     * @param [lon] is the longitude of the location for which the tides are requested.
+     * @param [callback] is the callback that will return the results wrapped in a [Result].
+     */
+    fun getTideHeights(date: Date, days: Int, lat: String, lon: String, callback: (Result<TideHeights>) -> Unit) {
+        val dateStr = inputDateFormat.format(date)
+        tidesRepository.heights(dateStr, days, lat, lon, apiKey, callback)
+    }
+
+    /**
+     * Returns the predicted tide heights between [date] and the number of [days] in future.
+     * **This method exists for Java interoperability only.**
+     *
+     * @param [date] should be the starting date from which the tide heights prediction are requested.
+     * @param [days] should be the number of days for which tide heights are requested.
+     * @param [lat] is the latitude of the location for which the tides are requested.
+     * @param [lon] is the longitude of the location for which the tides are requested.
+     * @param [callback] is the callback that will return either tide heights or an error.
+     */
+    fun getTideHeights(date: Date, days: Int, lat: String, lon: String, callback: TidesCallback<TideHeights>) {
+        val dateStr = inputDateFormat.format(date)
+        tidesRepository.heights(dateStr, days, lat, lon, apiKey) { result ->
+            result.onFailure { callback.error(Error(it)) }
+            result.onSuccess { callback.result(it) }
+        }
+    }
+
+    /**
+     * Returns flexible tide data based on the specified [dataTypes].
+     * Supports stacking multiple data types in a single API call.
+     *
+     * @param [date] should be the starting date from which the tide data is requested.
+     * @param [days] should be the number of days for which tide data is requested.
+     * @param [lat] is the latitude of the location for which the tides are requested.
+     * @param [lon] is the longitude of the location for which the tides are requested.
+     * @param [dataTypes] list of data types to request (e.g., HEIGHTS, EXTREMES).
+     * @param [callback] is the callback that will return the results wrapped in a [Result].
+     */
+    fun getTides(date: Date, days: Int, lat: String, lon: String, dataTypes: List<TideDataType>, callback: (Result<Tides>) -> Unit) {
+        val dateStr = inputDateFormat.format(date)
+        tidesRepository.tides(dataTypes, dateStr, days, lat, lon, apiKey, callback)
+    }
+
+    /**
+     * Returns flexible tide data based on the specified [dataTypes].
+     * **This method exists for Java interoperability only.**
+     *
+     * @param [date] should be the starting date from which the tide data is requested.
+     * @param [days] should be the number of days for which tide data is requested.
+     * @param [lat] is the latitude of the location for which the tides are requested.
+     * @param [lon] is the longitude of the location for which the tides are requested.
+     * @param [dataTypes] list of data types to request.
+     * @param [callback] is the callback that will return either tide data or an error.
+     */
+    fun getTides(date: Date, days: Int, lat: String, lon: String, dataTypes: List<TideDataType>, callback: TidesCallback<Tides>) {
+        val dateStr = inputDateFormat.format(date)
+        tidesRepository.tides(dataTypes, dateStr, days, lat, lon, apiKey) { result ->
+            result.onFailure { callback.error(Error(it)) }
+            result.onSuccess { callback.result(it) }
+        }
+    }
 }
+

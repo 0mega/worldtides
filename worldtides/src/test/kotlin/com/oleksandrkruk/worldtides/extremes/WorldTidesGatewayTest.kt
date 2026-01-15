@@ -1,6 +1,7 @@
 package com.oleksandrkruk.worldtides.extremes
 
 import com.oleksandrkruk.worldtides.RetrofitClient
+import com.oleksandrkruk.worldtides.WorldTidesGateway
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach
@@ -15,35 +16,37 @@ class WorldTidesGatewayTest {
 
     @BeforeEach
     fun setup() {
-        val response = MockResponse().setBody("{\n" +
-                "  \"status\": 200,\n" +
-                "  \"callCount\": 1,\n" +
-                "  \"copyright\": \"Tidal data retrieved from www.worldtides.info...\",\n" +
-                "  \"requestLat\": 37.733299,\n" +
-                "  \"requestLon\": -25.6667,\n" +
-                "  \"responseLat\": 37.7333,\n" +
-                "  \"responseLon\": -25.6667,\n" +
-                "  \"atlas\": \"FES\",\n" +
-                "  \"station\": \"PONTA DELGADA\",\n" +
-                "  \"extremes\": [\n" +
-                "    {\n" +
-                "      \"dt\": 1613540259,\n" +
-                "      \"date\": \"2021-02-17T05:37+0000\",\n" +
-                "      \"height\": 0.485,\n" +
-                "      \"type\": \"High\"\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"dt\": 1613562548,\n" +
-                "      \"date\": \"2021-02-17T11:49+0000\",\n" +
-                "      \"height\": -0.425,\n" +
-                "      \"type\": \"Low\"\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"dt\": 1613584701,\n" +
-                "      \"date\": \"2021-02-17T17:58+0000\",\n" +
-                "      \"height\": 0.368,\n" +
-                "      \"type\": \"High\"\n" +
-                "    }]}")
+        val response = MockResponse().setBody("""{
+            "status": 200,
+            "callCount": 1,
+            "copyright": "Tidal data retrieved from www.worldtides.info...",
+            "requestLat": 37.733299,
+            "requestLon": -25.6667,
+            "responseLat": 37.7333,
+            "responseLon": -25.6667,
+            "atlas": "FES",
+            "station": "PONTA DELGADA",
+            "extremes": [
+                {
+                    "dt": 1613540259,
+                    "date": "2021-02-17T05:37+0000",
+                    "height": 0.485,
+                    "type": "High"
+                },
+                {
+                    "dt": 1613562548,
+                    "date": "2021-02-17T11:49+0000",
+                    "height": -0.425,
+                    "type": "Low"
+                },
+                {
+                    "dt": 1613584701,
+                    "date": "2021-02-17T17:58+0000",
+                    "height": 0.368,
+                    "type": "High"
+                }
+            ]
+        }""")
         server.enqueue(response)
         server.start()
         val baseUrl = server.url("")

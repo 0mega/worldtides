@@ -2,7 +2,7 @@ package com.oleksandrkruk.worldtides
 
 /**
  * Generic callback interface for WorldTides API responses.
- * Supports TideExtremes, TideHeights, Tides, and future types.
+ * Supports TideExtremes, TideHeights, TideCombined, and future types.
  *
  * @param T The result type.
  */
