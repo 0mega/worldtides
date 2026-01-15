@@ -42,8 +42,9 @@ class TideHeightsTest {
     @Test
     @DisplayName("TideHeights is data class with correct equals")
     fun tideHeightsIsDataClassWithCorrectEquals() {
-        val heights1 = TideHeights(listOf(Height(null, 0.5)))
-        val heights2 = TideHeights(listOf(Height(null, 0.5)))
+        val testDate = Date()
+        val heights1 = TideHeights(listOf(Height(testDate, 0.5)))
+        val heights2 = TideHeights(listOf(Height(testDate, 0.5)))
         assertEquals(heights1, heights2)
     }
 }

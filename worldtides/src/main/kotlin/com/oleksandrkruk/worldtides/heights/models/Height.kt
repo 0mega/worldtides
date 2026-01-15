@@ -9,6 +9,6 @@ import java.util.Date
  * @property height The height level (datum relative).
  */
 data class Height(
-    val date: Date?,
+    val date: Date,
     val height: Double
 )

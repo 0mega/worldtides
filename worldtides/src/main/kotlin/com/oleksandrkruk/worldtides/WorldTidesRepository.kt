@@ -54,7 +54,7 @@ internal class WorldTidesRepository(
                 if (response.isSuccessful && response.body() != null) {
                     response.body()?.let { heightsResponse ->
                         val heights = heightsResponse.heights.map { heightData ->
-                            Height(dateFormat.parse(heightData.date), heightData.height)
+                            Height(dateFormat.parse(heightData.date)!!, heightData.height)
                         }
                         val tideHeights = TideHeights(heights)
                         callback(Result.success(tideHeights))
@@ -88,7 +88,7 @@ internal class WorldTidesRepository(
                     response.body()?.let { tidesResponse ->
                         val tideHeights = tidesResponse.heights?.let { heightsList ->
                             val heights = heightsList.map { heightData ->
-                                Height(dateFormat.parse(heightData.date), heightData.height)
+                                Height(dateFormat.parse(heightData.date)!!, heightData.height)
                             }
                             TideHeights(heights)
                         }

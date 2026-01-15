@@ -1,7 +1,6 @@
 package com.oleksandrkruk.worldtides.heights.models
 
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import java.util.*
@@ -21,13 +20,6 @@ class HeightTest {
     fun heightStoresHeightValueCorrectly() {
         val height = Height(Date(), 0.485)
         assertEquals(0.485, height.height)
-    }
-
-    @Test
-    @DisplayName("Height handles null date")
-    fun heightHandlesNullDate() {
-        val height = Height(null, 0.485)
-        assertNull(height.date)
     }
 
     @Test
