@@ -1,11 +1,12 @@
 package com.oleksandrkruk.worldtides
 
 import com.oleksandrkruk.worldtides.extremes.data.TideExtremesResponse
-import com.oleksandrkruk.worldtides.extremes.models.Extreme
+import com.oleksandrkruk.worldtides.extremes.data.toExtreme
+import com.oleksandrkruk.worldtides.extremes.data.toTideExtremes
 import com.oleksandrkruk.worldtides.extremes.models.TideExtremes
-import com.oleksandrkruk.worldtides.extremes.models.TideType
 import com.oleksandrkruk.worldtides.heights.data.TideHeightsResponse
-import com.oleksandrkruk.worldtides.heights.models.Height
+import com.oleksandrkruk.worldtides.heights.data.toHeight
+import com.oleksandrkruk.worldtides.heights.data.toTideHeights
 import com.oleksandrkruk.worldtides.heights.models.TideHeights
 import com.oleksandrkruk.worldtides.models.TideDataType
 import com.oleksandrkruk.worldtides.models.Tides
@@ -29,11 +30,7 @@ internal class WorldTidesRepository(
             override fun onResponse(call: Call<TideExtremesResponse>, response: Response<TideExtremesResponse>) {
                 if (response.isSuccessful && response.body() != null) {
                     response.body()?.let { tidesResponse ->
-                        val extremes = tidesResponse.extremes.map { extreme ->
-                            Extreme(dateFormat.parse(extreme.date), extreme.height, TideType.valueOf(extreme.type))
-                        }
-                        val tideExtremes = TideExtremes(extremes)
-                        callback(Result.success(tideExtremes))
+                        callback(Result.success(tidesResponse.toTideExtremes(dateFormat)))
                     } ?: run {
                         callback(Result.failure(Error("Response is successful but failed getting body")))
                     }
@@ -53,11 +50,7 @@ internal class WorldTidesRepository(
             override fun onResponse(call: Call<TideHeightsResponse>, response: Response<TideHeightsResponse>) {
                 if (response.isSuccessful && response.body() != null) {
                     response.body()?.let { heightsResponse ->
-                        val heights = heightsResponse.heights.map { heightData ->
-                            Height(dateFormat.parse(heightData.date)!!, heightData.height)
-                        }
-                        val tideHeights = TideHeights(heights)
-                        callback(Result.success(tideHeights))
+                        callback(Result.success(heightsResponse.toTideHeights(dateFormat)))
                     } ?: run {
                         callback(Result.failure(Error("Response is successful but failed getting body")))
                     }
@@ -87,16 +80,10 @@ internal class WorldTidesRepository(
                 if (response.isSuccessful && response.body() != null) {
                     response.body()?.let { tidesResponse ->
                         val tideHeights = tidesResponse.heights?.let { heightsList ->
-                            val heights = heightsList.map { heightData ->
-                                Height(dateFormat.parse(heightData.date)!!, heightData.height)
-                            }
-                            TideHeights(heights)
+                            TideHeights(heightsList.map { it.toHeight(dateFormat) })
                         }
                         val tideExtremes = tidesResponse.extremes?.let { extremesList ->
-                            val extremes = extremesList.map { extreme ->
-                                Extreme(dateFormat.parse(extreme.date), extreme.height, TideType.valueOf(extreme.type))
-                            }
-                            TideExtremes(extremes)
+                            TideExtremes(extremesList.map { it.toExtreme(dateFormat) })
                         }
                         val tides = Tides(heights = tideHeights, extremes = tideExtremes)
                         callback(Result.success(tides))
@@ -110,4 +97,3 @@ internal class WorldTidesRepository(
         })
     }
 }
-
