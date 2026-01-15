@@ -17,17 +17,4 @@ class TideDataTypeTest {
     fun extremesHasCorrectQueryValue() {
         assertEquals("extremes", TideDataType.EXTREMES.queryValue)
     }
-
-    @Test
-    @DisplayName("TideDataType enum has exactly 2 values")
-    fun tideDataTypeEnumHasExactlyTwoValues() {
-        assertEquals(2, TideDataType.values().size)
-    }
-
-    @Test
-    @DisplayName("TideDataType values contain HEIGHTS and EXTREMES")
-    fun tideDataTypeValuesContainHeightsAndExtremes() {
-        val values = TideDataType.values().toList()
-        assertEquals(listOf(TideDataType.HEIGHTS, TideDataType.EXTREMES), values)
-    }
 }

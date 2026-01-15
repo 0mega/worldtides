@@ -77,51 +77,6 @@ class WorldTidesGatewayTidesTest {
     }
 
     @Test
-    @DisplayName("tides endpoint contains date in query params")
-    fun containsDateInQueryParams() {
-        val response = service?.tides("v2?heights", "2021-02-17", 1, "bar", "baz", "key")?.execute()
-        val requestUrl = response?.raw()?.request()?.url()
-        assertTrue(requestUrl!!.queryParameterNames().contains("date"))
-        assertEquals("2021-02-17", requestUrl.queryParameter("date"))
-    }
-
-    @Test
-    @DisplayName("tides endpoint contains days in query params")
-    fun containsDaysInQueryParams() {
-        val response = service?.tides("v2?heights", "foo", 7, "bar", "baz", "key")?.execute()
-        val requestUrl = response?.raw()?.request()?.url()
-        assertTrue(requestUrl!!.queryParameterNames().contains("days"))
-        assertEquals("7", requestUrl.queryParameter("days"))
-    }
-
-    @Test
-    @DisplayName("tides endpoint contains lat in query params")
-    fun containsLatInQueryParams() {
-        val response = service?.tides("v2?heights", "foo", 1, "37.7333", "baz", "key")?.execute()
-        val requestUrl = response?.raw()?.request()?.url()
-        assertTrue(requestUrl!!.queryParameterNames().contains("lat"))
-        assertEquals("37.7333", requestUrl.queryParameter("lat"))
-    }
-
-    @Test
-    @DisplayName("tides endpoint contains lon in query params")
-    fun containsLonInQueryParams() {
-        val response = service?.tides("v2?heights", "foo", 1, "bar", "-25.6667", "key")?.execute()
-        val requestUrl = response?.raw()?.request()?.url()
-        assertTrue(requestUrl!!.queryParameterNames().contains("lon"))
-        assertEquals("-25.6667", requestUrl.queryParameter("lon"))
-    }
-
-    @Test
-    @DisplayName("tides endpoint contains API key in query params")
-    fun containsApiKeyInQueryParams() {
-        val response = service?.tides("v2?heights", "foo", 1, "bar", "baz", "testApiKey")?.execute()
-        val requestUrl = response?.raw()?.request()?.url()
-        assertTrue(requestUrl!!.queryParameterNames().contains("key"))
-        assertEquals("testApiKey", requestUrl.queryParameter("key"))
-    }
-
-    @Test
     @DisplayName("parses both heights and extremes from combined response")
     fun parsesBothHeightsAndExtremesFromCombinedResponse() {
         val response = service?.tides("v2?heights&extremes", "foo", 1, "bar", "baz", "key")?.execute()

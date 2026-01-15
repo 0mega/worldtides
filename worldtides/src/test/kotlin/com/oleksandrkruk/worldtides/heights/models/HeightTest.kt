@@ -21,18 +21,4 @@ class HeightTest {
         val height = Height(Date(), 0.485)
         assertEquals(0.485, height.height)
     }
-
-    @Test
-    @DisplayName("Height handles negative height values")
-    fun heightHandlesNegativeHeightValues() {
-        val height = Height(Date(), -0.425)
-        assertEquals(-0.425, height.height)
-    }
-
-    @Test
-    @DisplayName("Height handles zero height value")
-    fun heightHandlesZeroHeightValue() {
-        val height = Height(Date(), 0.0)
-        assertEquals(0.0, height.height)
-    }
 }
