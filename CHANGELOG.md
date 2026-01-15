@@ -5,33 +5,53 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## UNRELEASED
+## [2.0.0] - 2026-01-15
+
+### ⚠️ BREAKING CHANGES
+
+- **`TidesCallback` is now generic**: The callback interface has been refactored to `TidesCallback<T>` to support multiple response types.
+
+  **Migration for Java users:**
+  ```java
+  // Before
+  new TidesCallback() {
+      @Override public void result(TideExtremes tides) { }
+      @Override public void error(Error error) { }
+  }
+  
+  // After
+  new TidesCallback<TideExtremes>() {
+      @Override public void result(TideExtremes data) { }
+      @Override public void error(Error error) { }
+  }
+  ```
+
+- **`Height.date` is now non-nullable**: Changed from `Date?` to `Date` for consistency with `Extreme.date`.
 
 ### Added
 
-- **Heights API**: New `getTideHeights()` method to fetch tide height predictions
-- **Flexible Tides API**: New `getTides()` method to fetch multiple data types in a single call
-- `TideDataType` enum for specifying which data types to request (HEIGHTS, EXTREMES)
-- `Tides` model for combined API responses
-- `TideHeights` and `Height` models for tide height data
-- Comprehensive test coverage for new API methods
-- SpekKit
-- Project constitution
-- Github copilot instructions for commit summaries
+- `getTideHeights()` - Fetch predicted tide heights for a location
+- `getTides()` - Flexible method to fetch any combination of tide data types
+- `TideDataType` enum for specifying data types (HEIGHTS, EXTREMES)
+- `Tides` model for combined tide data responses
+- `TideHeights` and `Height` models for height data
+- Comprehensive test coverage for all new functionality
 
 ### Changed
 
 - Refactored `WorldTidesRepository` and `WorldTidesGateway` to package root for shared usage
+- Internal: Added DTO mapping extension functions for cleaner code
+- Internal: Extracted `enqueueMapped()` extension for callback boilerplate
+
+### Internal
+
 - Bump Kotlin version to 1.9.20
 - Bump Gradle to 8.9
 - Bump mockito to 5.13.0
 - Bump to JDK_1_8
 - Replace jcenter() with mavenCentral()
 - Update github actions setup
-
-### Breaking Changes
-
-- **BREAKING**: `TidesCallback` is now generic `TidesCallback<T>`. Existing consumers using Java-style callbacks must update to `TidesCallback<TideExtremes>`
+- Added SpekKit and project constitution
 
 ## 1.0.0 - 2021-02-15
 
