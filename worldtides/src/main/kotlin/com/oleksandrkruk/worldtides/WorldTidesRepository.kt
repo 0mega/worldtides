@@ -22,43 +22,17 @@ internal class WorldTidesRepository(
 ) {
 
     fun extremes(date: String, days: Int, lat: String, lon: String, apiKey: String, callback: (Result<TideExtremes>) -> Unit) {
-        tidesService.extremes(date, days, lat, lon, apiKey).enqueue(object : Callback<TideExtremesResponse> {
-            override fun onFailure(call: Call<TideExtremesResponse>, t: Throwable) {
-                callback(Result.failure(t))
-            }
-
-            override fun onResponse(call: Call<TideExtremesResponse>, response: Response<TideExtremesResponse>) {
-                if (response.isSuccessful && response.body() != null) {
-                    response.body()?.let { tidesResponse ->
-                        callback(Result.success(tidesResponse.toTideExtremes(dateFormat)))
-                    } ?: run {
-                        callback(Result.failure(Error("Response is successful but failed getting body")))
-                    }
-                } else {
-                    callback(Result.failure(Error("Response body is null or response is not successful")))
-                }
-            }
-        })
+        tidesService.extremes(date, days, lat, lon, apiKey).enqueueMapped(
+            transform = { it.toTideExtremes(dateFormat) },
+            callback = callback
+        )
     }
 
     fun heights(date: String, days: Int, lat: String, lon: String, apiKey: String, callback: (Result<TideHeights>) -> Unit) {
-        tidesService.heights(date, days, lat, lon, apiKey).enqueue(object : Callback<TideHeightsResponse> {
-            override fun onFailure(call: Call<TideHeightsResponse>, t: Throwable) {
-                callback(Result.failure(t))
-            }
-
-            override fun onResponse(call: Call<TideHeightsResponse>, response: Response<TideHeightsResponse>) {
-                if (response.isSuccessful && response.body() != null) {
-                    response.body()?.let { heightsResponse ->
-                        callback(Result.success(heightsResponse.toTideHeights(dateFormat)))
-                    } ?: run {
-                        callback(Result.failure(Error("Response is successful but failed getting body")))
-                    }
-                } else {
-                    callback(Result.failure(Error("Response body is null or response is not successful")))
-                }
-            }
-        })
+        tidesService.heights(date, days, lat, lon, apiKey).enqueueMapped(
+            transform = { it.toTideHeights(dateFormat) },
+            callback = callback
+        )
     }
 
     fun tides(
@@ -71,29 +45,47 @@ internal class WorldTidesRepository(
         callback: (Result<Tides>) -> Unit
     ) {
         val endpoint = "v2?" + dataTypes.joinToString("&") { it.queryValue }
-        tidesService.tides(endpoint, date, days, lat, lon, apiKey).enqueue(object : Callback<TidesResponse> {
-            override fun onFailure(call: Call<TidesResponse>, t: Throwable) {
-                callback(Result.failure(t))
-            }
-
-            override fun onResponse(call: Call<TidesResponse>, response: Response<TidesResponse>) {
-                if (response.isSuccessful && response.body() != null) {
-                    response.body()?.let { tidesResponse ->
-                        val tideHeights = tidesResponse.heights?.let { heightsList ->
-                            TideHeights(heightsList.map { it.toHeight(dateFormat) })
-                        }
-                        val tideExtremes = tidesResponse.extremes?.let { extremesList ->
-                            TideExtremes(extremesList.map { it.toExtreme(dateFormat) })
-                        }
-                        val tides = Tides(heights = tideHeights, extremes = tideExtremes)
-                        callback(Result.success(tides))
-                    } ?: run {
-                        callback(Result.failure(Error("Response is successful but failed getting body")))
+        tidesService.tides(endpoint, date, days, lat, lon, apiKey).enqueueMapped(
+            transform = { tidesResponse ->
+                Tides(
+                    heights = tidesResponse.heights?.let { heightsList ->
+                        TideHeights(heightsList.map { it.toHeight(dateFormat) })
+                    },
+                    extremes = tidesResponse.extremes?.let { extremesList ->
+                        TideExtremes(extremesList.map { it.toExtreme(dateFormat) })
                     }
-                } else {
-                    callback(Result.failure(Error("Response body is null or response is not successful")))
-                }
-            }
-        })
+                )
+            },
+            callback = callback
+        )
     }
 }
+
+/**
+ * Extension function to enqueue a Retrofit call with automatic mapping.
+ * Centralizes callback handling to reduce boilerplate across repository methods.
+ *
+ * @param transform Function to transform the response body into the desired result type.
+ * @param callback Callback to receive the Result (success or failure).
+ */
+private inline fun <T, R> Call<T>.enqueueMapped(
+    crossinline transform: (T) -> R,
+    crossinline callback: (Result<R>) -> Unit
+) {
+    enqueue(object : Callback<T> {
+        override fun onFailure(call: Call<T>, t: Throwable) {
+            callback(Result.failure(t))
+        }
+
+        override fun onResponse(call: Call<T>, response: Response<T>) {
+            if (response.isSuccessful && response.body() != null) {
+                response.body()?.let { body ->
+                    callback(Result.success(transform(body)))
+                } ?: callback(Result.failure(Error("Response is successful but failed getting body")))
+            } else {
+                callback(Result.failure(Error("Response body is null or response is not successful")))
+            }
+        }
+    })
+}
+
