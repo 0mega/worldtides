@@ -74,3 +74,6 @@ local.properties
 
 # Agent
 .agent
+
+# VSCode
+.vscode
