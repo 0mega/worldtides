@@ -2,7 +2,7 @@
 
 **Feature Branch**: `002-sample-client`  
 **Created**: 2026-01-16  
-**Status**: Draft  
+**Status**: Implemented  
 **Input**: User description: "Create a sample client for the WorldTides library that exercises all API use cases for end-to-end testing in CI"
 
 ## User Scenarios & Testing *(mandatory)*

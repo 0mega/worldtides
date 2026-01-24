@@ -16,11 +16,11 @@
 
 **Purpose**: Create standalone sample-client project structure
 
-- [ ] T001 Create `sample-client/` directory at repository root
-- [ ] T002 Create `sample-client/settings.gradle.kts` with project name "sample-client"
-- [ ] T003 Create `sample-client/build.gradle.kts` with Kotlin JVM, mavenLocal, JUnit 5, and AssertJ dependencies
-- [ ] T004 Create directory structure: `sample-client/src/test/kotlin/com/oleksandrkruk/worldtides/sample/`
-- [ ] T005 Verify project compiles: `cd sample-client && ./gradlew build` (should succeed with empty test class)
+- [x] T001 Create `sample-client/` directory at repository root
+- [x] T002 Create `sample-client/settings.gradle.kts` with project name "sample-client"
+- [x] T003 Create `sample-client/build.gradle.kts` with Kotlin JVM, mavenLocal, JUnit 5, and AssertJ dependencies
+- [x] T004 Create directory structure: `sample-client/src/test/kotlin/com/oleksandrkruk/worldtides/sample/`
+- [x] T005 Verify project compiles: `cd sample-client && ./gradlew build` (should succeed with empty test class)
 
 **Checkpoint**: Standalone project structure ready. Can now write tests.
 
@@ -36,17 +36,17 @@
 
 > **TDD**: Write failing tests that define expected behavior, then implement code to make them pass
 
-- [ ] T006 [US1] Create test file `sample-client/src/test/kotlin/com/oleksandrkruk/worldtides/sample/E2ETest.kt` with test class skeleton and API key from env var
-- [ ] T007 [P] [US1] Write failing test `testGetTideExtremes()` - asserts response has non-empty extremes list with valid dates, heights, and TideType (FR-001)
-- [ ] T008 [P] [US1] Write failing test `testGetTideHeights()` - asserts response has non-empty heights list with valid dates and height values (FR-002)
-- [ ] T009 [P] [US1] Write failing test `testGetTidesHeightsOnly()` - asserts heights present and extremes null (FR-003)
-- [ ] T010 [P] [US1] Write failing test `testGetTidesExtremesOnly()` - asserts extremes present and heights null (FR-004)
-- [ ] T011 [P] [US1] Write failing test `testGetTidesBothTypes()` - asserts both heights and extremes present (FR-005)
+- [x] T006 [US1] Create test file `sample-client/src/test/kotlin/com/oleksandrkruk/worldtides/sample/E2ETest.kt` with test class skeleton and API key from env var
+- [x] T007 [P] [US1] Write failing test `testGetTideExtremes()` - asserts response has non-empty extremes list with valid dates, heights, and TideType (FR-001)
+- [x] T008 [P] [US1] Write failing test `testGetTideHeights()` - asserts response has non-empty heights list with valid dates and height values (FR-002)
+- [x] T009 [P] [US1] Write failing test `testGetTidesHeightsOnly()` - asserts heights present and extremes null (FR-003)
+- [x] T010 [P] [US1] Write failing test `testGetTidesExtremesOnly()` - asserts extremes present and heights null (FR-004)
+- [x] T011 [P] [US1] Write failing test `testGetTidesBothTypes()` - asserts both heights and extremes present (FR-005)
 
 ### Implementation for User Story 1
 
-- [ ] T012 [US1] Publish worldtides library: `./gradlew :worldtides:publishToMavenLocal`
-- [ ] T013 [US1] Verify all US1 tests pass with valid API key: `WORLD_TIDES_API_KEY=<key> ./gradlew :sample-client:test`
+- [x] T012 [US1] Publish worldtides library: `./gradlew :worldtides:publishToMavenLocal`
+- [x] T013 [US1] Verify all US1 tests pass with valid API key: `WORLD_TIDES_API_KEY=<key> ./gradlew :sample-client:test`
 
 **Checkpoint**: All 5 happy-path API tests pass. User Story 1 complete.
 
@@ -60,11 +60,11 @@
 
 ### Tests for User Story 2 (TDD - Write FIRST, verify FAIL)
 
-- [ ] T014 [US2] Write failing test `testInvalidApiKeyReturnsError()` in `sample-client/src/test/kotlin/com/oleksandrkruk/worldtides/sample/E2ETest.kt` - asserts error callback invoked, not success (FR-006)
+- [x] T014 [US2] Write failing test `testInvalidApiKeyReturnsError()` in `sample-client/src/test/kotlin/com/oleksandrkruk/worldtides/sample/E2ETest.kt` - asserts error callback invoked, not success (FR-006)
 
 ### Implementation for User Story 2
 
-- [ ] T015 [US2] Verify US2 test passes: error test uses hardcoded invalid key and confirms error result
+- [x] T015 [US2] Verify US2 test passes: error test uses hardcoded invalid key and confirms error result
 
 **Checkpoint**: Error handling verified. User Story 2 complete.
 
@@ -78,10 +78,10 @@
 
 ### Implementation for User Story 3 (No TDD - infrastructure config)
 
-- [ ] T016 [US3] Create `.github/workflows/e2e.yml` with `workflow_dispatch` trigger only (FR-009)
-- [ ] T017 [US3] Add step to publish worldtides to mavenLocal before running tests (FR-010)
-- [ ] T018 [US3] Add step to run sample-client tests with `WORLD_TIDES_API_KEY` secret
-- [ ] T019 [US3] Validate workflow YAML syntax: `yamllint .github/workflows/e2e.yml` or manual review
+- [x] T016 [US3] Create `.github/workflows/e2e.yml` with `workflow_dispatch` trigger only (FR-009)
+- [x] T017 [US3] Add step to publish worldtides to mavenLocal before running tests (FR-010)
+- [x] T018 [US3] Add step to run sample-client tests with `WORLD_TIDES_API_KEY` secret
+- [x] T019 [US3] Validate workflow YAML syntax: `yamllint .github/workflows/e2e.yml` or manual review
 
 **Checkpoint**: CI workflow ready. User Story 3 complete.
 
@@ -91,9 +91,9 @@
 
 **Purpose**: Final validation and documentation
 
-- [ ] T020 Run full test suite locally with valid API key to confirm all tests pass
-- [ ] T021 [P] Update specs/002-sample-client/ docs to mark feature as implemented
-- [ ] T022 Commit all changes with descriptive message
+- [x] T020 Run full test suite locally with valid API key to confirm all tests pass
+- [x] T021 [P] Update specs/002-sample-client/ docs to mark feature as implemented
+- [x] T022 Commit all changes with descriptive message
 
 ---
 
