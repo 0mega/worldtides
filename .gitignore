@@ -15,7 +15,7 @@
 # Package Files #
 *.jar
 # But allow the gradle jar
-!gradle/wrapper/gradle-wrapper.jar
+!**/gradle/wrapper/gradle-wrapper.jar
 *.war
 *.nar
 *.ear
