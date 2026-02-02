@@ -75,5 +75,8 @@ local.properties
 # Agent
 .agent
 
+# OpenSpec
+.gemini/
+
 # VSCode
 .vscode
