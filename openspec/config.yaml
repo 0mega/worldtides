@@ -1,0 +1,22 @@
+schema: spec-driven
+context: |
+  Stack: Kotlin 1.9+ (Java 8 compat), Gradle, Retrofit, Moshi.
+  Core: Strong-typed WorldTides proxy, immutable models, strict null-safety (Result<T>).
+  Constraints: First-class Java interop (Callbacks + Suspend, @JvmStatic). 100% test coverage.
+  Conventions: SemVer, Conventional Commits, KDoc/Javadoc required. No raw JSON exposure.
+
+rules:
+  specs/**/*.md:
+    - Use Given/When/Then for behavioral requirements.
+    - Keep scenarios atomic and testable.
+  proposal:
+    - Keep proposals under 500 words
+    - Always include a "Non-goals" section
+  tasks:
+    - Break tasks into chunks of max 2 hours
+  README.md:
+    - Include side-by-side Kotlin and Java examples for all samples.
+  CHANGELOG.md:
+    - Log updates for every change in the library.
+    - Use semantic versioning.
+    - Only date the changes once a release is cut and lib version is bumped.
