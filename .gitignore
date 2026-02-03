@@ -72,11 +72,5 @@ local.properties
 *.iml
 *.ipr
 
-# Agent
-.agent
-
-# OpenSpec
-.gemini/
-
 # VSCode
 .vscode
