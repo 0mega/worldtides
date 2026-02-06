@@ -165,7 +165,3 @@ wt.getTides(date, 7, lat, lon, dataTypes, new TidesCallback<Tides>() {
 ## Versioning
 
 This project follows [Semantic Versioning](https://semver.org/).
-
-## Limitations
-
-- This lib uses Retrofit and OkHttp and at the moment it's not possible to pass in you existing OkHttp or other client to be used by retrofit. The plan is to allow the user of this lib to pass in the client to avoid creating multiple clients in your app.
